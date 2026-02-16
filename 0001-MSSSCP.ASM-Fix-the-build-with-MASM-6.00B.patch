@@ -1,0 +1,30 @@
+From c8a97340ca958f1cb20527d1bb6066b95301bc25 Mon Sep 17 00:00:00 2001
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
+Date: Mon, 16 Feb 2026 21:56:10 +0200
+Subject: [PATCH] MSSSCP.ASM: Fix the build with MASM 6.00B
+
+MASM 6.00B complains:
+
+	mssscp.asm(1090): error A2023: instruction operand must have size
+
+Fix that.
+---
+ MSSSCP.ASM | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/MSSSCP.ASM b/MSSSCP.ASM
+index 60009f1d8419..06aa1329dd0f 100644
+--- a/MSSSCP.ASM
++++ b/MSSSCP.ASM
+@@ -1087,7 +1087,7 @@ ifmde23:mov	bl,rdbuf[4]		; get array name letter
+ 	jbe	ifmde24			; be = in bounds
+ 	pop	es
+ 	jmp	ifmde9			; out of bounds, not defined
+-ifmde24:cmp	es:[si+2],0		; any string's segment?
++ifmde24:cmp	word ptr es:[si+2],0	; any string's segment?
+ 	pop	es
+ 	je	ifmde9			; e = no definition
+ 	jmp	ifmde10			; array element is defined
+-- 
+2.43.0
+

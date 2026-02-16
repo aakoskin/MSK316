@@ -1,0 +1,53 @@
+From 114f00bd1140df9aa505bc57481aeef8646ad0c1 Mon Sep 17 00:00:00 2001
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
+Date: Mon, 16 Feb 2026 22:04:52 +0200
+Subject: [PATCH] MAKEFILE: Adjust the build for MASM/MSC version 6
+
+Adjust the build for the MASM/MSC version 6 (apparenty final version
+runnable on 8086 and still compatible with MS-Kermit source code).
+
+The /VM flag is needed for biggest assembler files to avoid
+
+	fatal error A1004: out of far memory
+
+error. For whatever reason it's not possible to use the flag globally
+(as it introduces other errors with some other files).
+---
+ MAKEFILE | 12 ++++++++++--
+ 1 file changed, 10 insertions(+), 2 deletions(-)
+
+diff --git a/MAKEFILE b/MAKEFILE
+index cb479aea4008..2964856c2eb0 100644
+--- a/MAKEFILE
++++ b/MAKEFILE
+@@ -24,10 +24,12 @@
+ # The inference macros below call CL and MASM to create .obj modules.
+ 
+ .c.obj:
+- 	cl /AS /Zp1 /Gs /W3 /Zl /Of /nologo -c $*.c
++	cl /AS /Zp1 /Gs /W3 /Zl /nologo -c $*.c
++
++ML_FLAGS=/I. /Zm /c /Cx /Ta
+ 
+ .asm.obj:
+- 	masm /mx $*.asm;
++	ml $(ML_FLAGS) $*.asm
+ 
+ # kermit.exe is the first and hence the implied target if none is specified
+ 
+@@ -39,6 +41,12 @@ kermit.exe:	msscmd.obj msscom.obj mssfil.obj mssker.obj mssrcv.obj\
+ 		msnpkt.obj msnlib.obj msnut1.obj
+ 	LINK @ker.lnk
+ 
++msyibm.obj:
++	ml /VM $(ML_FLAGS) msyibm.asm
++
++mszibm.obj:
++	ml /VM $(ML_FLAGS) mszibm.asm
++
+ # These are the dependency relations (.obj depends on .asm/.c and .h):
+ 
+ msscmd.obj:	msscmd.asm mssdef.h
+-- 
+2.43.0
+

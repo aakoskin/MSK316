@@ -1,0 +1,36 @@
+MS-Kermit 3.16 Patches
+======================
+This repository contains fixes for the MS-Kermit 3.16 which development stopped
+in 2001 but is nowadays available under the Revised 3-Clause BSD License (see
+<https://www.kermitproject.org/licensing.html>).
+
+Pristine sources
+----------------
+The final MS-Kermit 3.16 (Beta 10, 22 April 2001) sources are available at
+<https://www.kermitproject.org/msdoskermit/>.
+
+Patches
+-------
+The patches should be self-documenting. They are only tested together and are
+not meant to be cherry-picked.
+
+Building
+--------
+It is possible to build MS-Kermit natively on 8086 PC with 640 KB RAM. The
+patches have been tested using the following setup:
+   - MS-DOS Version 3.20
+   - Microsoft Macro Assembler Version 6.00B
+   - Microsoft C Optimizing Compiler Version 6.00A
+   - Microsoft Program Maintenance Utility Version 1.11
+   - Microsoft Segmented-Executable Linker Version 5.13
+   Simply, running "NMK" should be enough in the source directory.
+
+Install
+-------
+The last complete distribution was MS-Kermit 3.14. Install that first and check
+it's working. Then just take the KERMIT.EXE from the build.
+
+Changelog
+---------
+0: The initial version. Fixes a terminal emulation issue with vttest and fixes
+the build set up for MASM/MSC version 6.

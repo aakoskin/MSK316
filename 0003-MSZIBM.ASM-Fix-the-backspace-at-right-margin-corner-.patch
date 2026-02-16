@@ -1,0 +1,32 @@
+From b81225b04ac2cdc1b28654e35f2c53fe4071613b Mon Sep 17 00:00:00 2001
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
+Date: Mon, 16 Feb 2026 22:13:02 +0200
+Subject: [PATCH] MSZIBM.ASM: Fix the backspace at right margin corner case
+
+When the cursor is at the right margin (or virtually beyond) and backspace
+is pressed, the movement maybe omitted. This breaks the vttest (version
+2.7 (20230201)) test of cursor movements (the third screen "Test of
+autowrap, mixing control and print characters."). Fix that.
+---
+ MSZIBM.ASM | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/MSZIBM.ASM b/MSZIBM.ASM
+index 6a1af2773046..854c6ae2d435 100644
+--- a/MSZIBM.ASM
++++ b/MSZIBM.ASM
+@@ -1604,7 +1604,10 @@ atbs:	cmp	decrlm,0		; host writing direction active?
+ 	jne	atbs2			; ne = yes
+ 	or	dl,dl			; Backspace, too far?
+ 	jz	atbs1			; z = at column 0 already
+-	dec	dl			; backup cursor
++	cmp	dl,mar_right		; check range
++	jbe	atbs0			; be = cursor on screen
++	mov	dl,mar_right		; set to right margin
++atbs0:	dec	dl			; backup cursor
+ atbs1:	call	atccpc			; check range
+ 	mov	atwrap,0		; cancel wrap pending
+ 	jmp	atsetcur		; set cursor and return
+-- 
+2.43.0
+

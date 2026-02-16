@@ -1,0 +1,31 @@
+From 4458737e428fe27a826c68df9f9059fc7a678880 Mon Sep 17 00:00:00 2001
+From: Aaro Koskinen <aaro.koskinen@iki.fi>
+Date: Mon, 16 Feb 2026 22:19:50 +0200
+Subject: [PATCH] MSSDEF.H: Adjust the version string
+
+Adjust the version string so it's clear that this version is a hacked one.
+---
+ MSSDEF.H | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/MSSDEF.H b/MSSDEF.H
+index ba024d682040..85bb8283cb8f 100644
+--- a/MSSDEF.H
++++ b/MSSDEF.H
+@@ -37,11 +37,11 @@ endif	; no_terminal
+ 
+ version equ	316		; master version number
+ verdef	macro
+-	db	' MS-DOS Kermit: 3.16 Beta 10'
++	db	' MS-DOS Kermit: 3.16 Beta 10 (Bitwoods 0)'
+ ifdef	nls_portuguese
+ 	db	' Portuguese'
+ endif	; nls_portuguese
+-	db	' 22 April 2001'
++	db	' 16 February 2026'
+ 	endm
+ 
+ BELL	EQU	07H
+-- 
+2.43.0
+
