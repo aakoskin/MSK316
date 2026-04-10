@@ -34,3 +34,7 @@ Changelog
 ---------
 0: The initial version. Fixes a terminal emulation issue with vttest and fixes
 the build set up for MASM/MSC version 6.
+
+License
+-------
+The Revised 3-Clause BSD License (the same as the re-licensed MS-DOS Kermit)
